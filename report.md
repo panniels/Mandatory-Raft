@@ -12,4 +12,9 @@ The systems simulates Remote Procedure Calls with method calls like; server.Requ
 
 c)	properties guaranteed by the protocol implementation (is it faithful to what we saw at the lecture?)
 
+One of the properties that is guaranteed by the system is Election Safety. It does this by insuring that a candidate only can become a leader by getting majority votes. Furthermore, a server is only allowed to vote once pr term, by the variable (votedFor).
+The system also guarantees that the leader uses Append-Only (with AppendEntries), and does not overwrite or delete entries.
+
+
+
 
