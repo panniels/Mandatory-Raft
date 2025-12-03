@@ -13,7 +13,12 @@ The systems simulates Remote Procedure Calls with method calls like; server.Requ
 c)	properties guaranteed by the protocol implementation (is it faithful to what we saw at the lecture?)
 
 One of the properties that is guaranteed by the system is Election Safety. It does this by insuring that a candidate only can become a leader by getting majority votes. Furthermore, a server is only allowed to vote once pr term, by the variable (votedFor).
-The system also guarantees that the leader uses Append-Only (with AppendEntries), and does not overwrite or delete entries.
+The system also guarantees that the leader uses Append-Only (with AppendEntries), and does not overwrite or delete entries. It does this by only being allowed to append to the cluster, not actually overwriting or removing any data. 
+The system does not implement log matching. To implement this the system should implement a way to keep track of the different terms and compare them to the appeneded entries which it currently does not do.
+As a result leader completeness is also not implemented in the system. RequestVote() only keeps track of the log length, but does not know about the log term. As such only the index of the logs are compared not the log terms. This results in the leaders not having full completeness as they have incomplete logs.
+There is also no implementation of state machine safety in the system. The system does contain commit indexes and last applied fields but they are never incremented in the system, and therefore never updated. 
+Overall the system implements a basic framework of raft but lacks critical components needed for full complete implementation.
+
 
 
 
